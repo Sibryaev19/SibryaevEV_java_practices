@@ -1,0 +1,29 @@
+embed-server --std-out=echo --server-config=standalone.xml
+
+batch
+
+echo === Добавление модуля PostgreSQL драйвера ===
+module add --name=org.postgresql --resources=${jboss.home.dir}/modules/system/layers/base/org/postgresql/main/postgresql-42.7.4.jar --dependencies=javax.api,javax.transaction.api
+
+echo === Регистрация драйвера ===
+/subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql,driver-class-name=org.postgresql.Driver)
+
+echo === Добавление DataSource ProductDS ===
+/subsystem=datasources/data-source=ProductDS:add(
+    jndi-name=java:jboss/datasources/ProductDS,
+    driver-name=postgresql,
+    connection-url=jdbc:postgresql://localhost:5432/product_db,
+    user-name=postgres,
+    password=999111,
+    min-pool-size=5,
+    max-pool-size=20,
+    validate-on-match=true,
+    background-validation=false,
+    exception-sorter-class-name=org.jboss.jca.adapters.jdbc.extensions.postgres.PostgreSQLExceptionSorter
+)
+
+run-batch
+
+stop-embedded-server
+
+
