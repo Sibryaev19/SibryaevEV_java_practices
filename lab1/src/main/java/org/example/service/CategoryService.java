@@ -46,7 +46,7 @@ public class CategoryService {
     public Category updateCategory(Long id, Category categoryDetails) {
         Category category = entityManager.find(Category.class, id);
         if (category == null) {
-            throw new RuntimeException("Категория с ID " + id + " не найдена");
+            throw new RuntimeException("Категория c ID " + id + " не найдена");
         }
 
         category.setName(categoryDetails.getName());

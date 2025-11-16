@@ -51,7 +51,7 @@ public class ProductService {
     public Product updateProduct(Long id, Product productDetails) {
         Product product = entityManager.find(Product.class, id);
         if (product == null) {
-            throw new RuntimeException("Продукт с ID " + id + " не найдена");
+            throw new RuntimeException("Продукт с ID " + id + " не найден");
         }
 
         // Обновляем категорию если нужно
@@ -75,7 +75,7 @@ public class ProductService {
     public void deleteProduct(Long id) {
         Product product = entityManager.find(Product.class, id);
         if (product == null) {
-            throw new RuntimeException("Продукт с ID " + id + " не найдена");
+            throw new RuntimeException("Продукт с ID " + id + " не найден");
         }
         entityManager.remove(product);
     }

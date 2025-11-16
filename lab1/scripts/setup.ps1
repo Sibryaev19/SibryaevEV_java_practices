@@ -42,10 +42,10 @@ $CliCmd = Join-Path $WildFlyHome "bin\jboss-cli.bat"
 & $CliCmd -c --controller=$MgmtHost:$MgmtPort --user=$AdminUser --password=$AdminPass "
   batch
   /subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql,driver-class-name=org.postgresql.Driver)
-  /subsystem=datasources/data-source=ProductDS:add(jndi-name=java:jboss/datasources/ProductDS, driver-name=postgresql, connection-url=jdbc:postgresql://$PgHost:$PgPort/product_db, user-name=$PgUser, password=$PgPass, min-pool-size=5, max-pool-size=20)
+  /subsystem=datasources/data-source=product_db:add(jndi-name=java:jboss/datasources/product_db, driver-name=postgresql, connection-url=jdbc:postgresql://$PgHost:$PgPort/product_db, user-name=$PgUser, password=$PgPass, min-pool-size=5, max-pool-size=20)
   run-batch
 "
 
-Write-Host "Готово. Проверьте DataSource 'ProductDS' в консоли WildFly."
+Write-Host "Готово. Проверьте DataSource 'product_db' в консоли WildFly."
 
 

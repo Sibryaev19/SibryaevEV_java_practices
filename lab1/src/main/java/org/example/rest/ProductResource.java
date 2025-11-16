@@ -1,8 +1,9 @@
-package org.example.resources;
+package org.example.rest;
 
 import org.example.entity.Product;
 import org.example.service.ProductService;
 import jakarta.inject.Inject;
+import jakarta.enterprise.context.RequestScoped;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -11,6 +12,7 @@ import java.util.List;
 @Path("/products")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
+@RequestScoped
 public class ProductResource {
 
     @Inject

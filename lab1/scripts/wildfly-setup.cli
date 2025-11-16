@@ -8,9 +8,9 @@ module add --name=org.postgresql --resources=${jboss.home.dir}/modules/system/la
 echo === Регистрация драйвера ===
 /subsystem=datasources/jdbc-driver=postgresql:add(driver-name=postgresql,driver-module-name=org.postgresql,driver-class-name=org.postgresql.Driver)
 
-echo === Добавление DataSource ProductDS ===
-/subsystem=datasources/data-source=ProductDS:add(
-    jndi-name=java:jboss/datasources/ProductDS,
+echo === Добавление DataSource product_db ===
+/subsystem=datasources/data-source=product_db:add(
+    jndi-name=java:jboss/datasources/product_db,
     driver-name=postgresql,
     connection-url=jdbc:postgresql://localhost:5432/product_db,
     user-name=postgres,
