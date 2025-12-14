@@ -1,13 +1,14 @@
 package org.example.service;
 
 import org.example.entity.Category;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
 import java.util.List;
 
-@ApplicationScoped
+@Stateless
 public class CategoryService {
 
     @PersistenceContext
@@ -25,7 +26,7 @@ public class CategoryService {
     }
 
     // Создать новую категорию
-    @Transactional
+    @jakarta.ejb.TransactionAttribute(jakarta.ejb.TransactionAttributeType.REQUIRED)
     public Category createCategory(Category category) {
         // Проверяем, нет ли уже категории с таким именем
         Long count = entityManager.createQuery(
@@ -42,7 +43,7 @@ public class CategoryService {
     }
 
     // Обновить категорию
-    @Transactional
+    @jakarta.ejb.TransactionAttribute(jakarta.ejb.TransactionAttributeType.REQUIRED)
     public Category updateCategory(Long id, Category categoryDetails) {
         Category category = entityManager.find(Category.class, id);
         if (category == null) {
@@ -56,7 +57,7 @@ public class CategoryService {
     }
 
     // Удалить категорию
-    @Transactional
+    @jakarta.ejb.TransactionAttribute(jakarta.ejb.TransactionAttributeType.REQUIRED)
     public void deleteCategory(Long id) {
         Category category = entityManager.find(Category.class, id);
         if (category == null) {

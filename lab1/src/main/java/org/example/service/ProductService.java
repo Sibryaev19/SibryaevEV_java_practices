@@ -2,14 +2,15 @@ package org.example.service;
 
 import org.example.entity.Product;
 import org.example.entity.Category;
-import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
+import jakarta.ejb.TransactionAttribute;
+import jakarta.ejb.TransactionAttributeType;
 import java.math.BigDecimal;
 import java.util.List;
 
-@ApplicationScoped
+@Stateless
 public class ProductService {
 
     @PersistenceContext
@@ -28,7 +29,7 @@ public class ProductService {
     }
 
     // Создать новый продукт
-    @Transactional
+    @jakarta.ejb.TransactionAttribute(jakarta.ejb.TransactionAttributeType.REQUIRED)
     public Product createProduct(Product product) {
         // Проверяем категорию
         if (product.getCategory() != null && product.getCategory().getCategoryId() != null) {
@@ -47,7 +48,7 @@ public class ProductService {
     }
 
     // Обновить продукт
-    @Transactional
+    @jakarta.ejb.TransactionAttribute(jakarta.ejb.TransactionAttributeType.REQUIRED)
     public Product updateProduct(Long id, Product productDetails) {
         Product product = entityManager.find(Product.class, id);
         if (product == null) {
@@ -71,7 +72,7 @@ public class ProductService {
     }
 
     // Удалить продукт
-    @Transactional
+    @jakarta.ejb.TransactionAttribute(jakarta.ejb.TransactionAttributeType.REQUIRED)
     public void deleteProduct(Long id) {
         Product product = entityManager.find(Product.class, id);
         if (product == null) {
