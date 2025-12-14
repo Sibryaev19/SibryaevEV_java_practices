@@ -21,32 +21,51 @@ public class BookController {
     @Autowired
     private AuthorService authorService;
 
-    // ВСЁ на одной странице: список + форма
     @GetMapping
     public String booksPage(Model model) {
         // 1. Список книг для таблицы
         List<Book> books = bookService.getAllBooks();
         model.addAttribute("books", books);
 
-        // 2. Пустая книга для формы добавления
-        Book newBook = new Book();
-        model.addAttribute("newBook", newBook);
-
-        // 3. Список авторов для выпадающего списка
+        // 2. Список авторов для выпадающего списка
         List<Author> authors = authorService.getAllAuthors();
         model.addAttribute("authors", authors);
+
+        // 3. По умолчанию - пустая книга для создания
+        if (!model.containsAttribute("editBook")) {
+            model.addAttribute("editBook", new Book());
+        }
 
         return "books";
     }
 
-    // Добавить книгу
+    @GetMapping("/edit/{id}")
+    public String editBookPage(@PathVariable Long id, Model model) {
+        // 1. Список книг для таблицы
+        List<Book> books = bookService.getAllBooks();
+        model.addAttribute("books", books);
+
+        // 2. Список авторов для выпадающего списка
+        List<Author> authors = authorService.getAllAuthors();
+        model.addAttribute("authors", authors);
+
+        // 3. Книга для редактирования
+        Book book = bookService.getBookById(id);
+        model.addAttribute("editBook", book);
+
+        return "books";
+    }
+
     @PostMapping("/save")
-    public String saveBook(@ModelAttribute("newBook") Book book) {
-        bookService.createBook(book);
+    public String saveBook(@ModelAttribute Book book) {
+        if (book.getId() == null) {
+            bookService.createBook(book);
+        } else {
+            bookService.updateBook(book);
+        }
         return "redirect:/books";
     }
 
-    // Удалить книгу
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable Long id) {
         bookService.deleteBook(id);
