@@ -1,6 +1,7 @@
 package org.example.lab3.entity;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "books")
@@ -27,6 +28,7 @@ public class Book {
 
     @ManyToOne
     @JoinColumn(name = "author_id", nullable = false)
+    @JsonBackReference
     private Author author;
 
     // Конструкторы

@@ -22,7 +22,20 @@ public class AuthorDaoImpl implements AuthorDao {
             entityManager.persist(author);
             return author;
         } else {
-            return entityManager.merge(author);
+            // Вариант 1: Если хотите обновить существующего автора
+            Author existing = entityManager.find(Author.class, author.getId());
+            if (existing != null) {
+                // Копируем поля из author в existing
+                existing.setFio(author.getFio());
+                existing.setNickname(author.getNickname());
+                existing.setBirthDate(author.getBirthDate());
+                existing.setDescription(author.getDescription());
+                return existing; // entityManager.merge(existing) не нужен, так как existing уже управляемый
+            } else {
+                // Если автор с таким id не найден, создаем нового
+                entityManager.persist(author);
+                return author;
+            }
         }
     }
 

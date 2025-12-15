@@ -1,6 +1,7 @@
 package org.example.lab3.entity;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class Author {
     private String description;
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Book> books;
 
     // Конструкторы
