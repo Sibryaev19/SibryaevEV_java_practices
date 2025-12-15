@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/transform.xsl"?>
+<List>
+    <item>
+        <id>1</id>
+        <name>Война и мир</name>
+        <description>Роман-эпопея</description>
+        <publicationYear>1869</publicationYear>
+    </item>
+</List>
